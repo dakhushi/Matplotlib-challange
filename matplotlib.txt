@@ -1,0 +1,37 @@
+
+# Generate a summary statistics table of mean, median, variance, standard deviation, and SEM of the tumor volume for each regimen
+# Use groupby and summary statistical methods to calculate the following properties of each drug regimen: 
+# mean, median, variance, standard deviation, and SEM of the tumor volume. 
+# Assemble the resulting series into a single summary DataFrame.
+
+regimen_group = data_no_duplicates.groupby('Drug Regimen')['Tumor Volume (mm3)']
+
+regimen_stats_df = pd.DataFrame(regimen_group)
+regimen_stats_df ['Mean'] = data_no_duplicates['Tumor Volume (mm3)'].mean()
+regimen_stats_df ['Median'] = data_no_duplicates['Tumor Volume (mm3)'].median()
+regimen_stats_df ['Variance'] = data_no_duplicates['Tumor Volume (mm3)'].var()
+regimen_stats_df ['Sandard Deviation'] = data_no_duplicates['Tumor Volume (mm3)'].std()
+regimen_stats_df ['SEM'] = data_no_duplicates['Tumor Volume (mm3)'].sem()
+
+regimen_stats_df.head()
+
+#regimen_grouped_df = pd.DataFrame({'Mean Tumor Volume':'mean'},
+                                 #{'Median Tumor Volume':'median'},
+                               # {'Tumor Volume Variance':'var'},
+                              # {'Tumor Volume Std. Dev.':'std'},
+                              # {'Tumor Volume Std. Err.':'sem'})
+
+regimen_grouped_df = pd.DataFrame(  {'Drug Regimen':['Infubinol', 'Placebo', 'Ceftamin', 'Stelasyn', 'Zoniferol',
+       'Ramicane', 'Ketapril', 'Propriva', 'Naftisol', 'Capomulin']},
+                                    {'Mean Tumor Volume':'mean'},
+                                    {'Median Tumor Volume':'median'},
+                                    {'Tumor Volume Variance':'variance'},
+                                    {'Tumor Volume Std. Dev.':'std_dev'},
+                                    {'Tumor Volume Std. Err.':'sem'}
+                                 )
+
+regimen_summary_df.rename(columns={'mean':'Mean Tumor Volume'},
+                               {'median': 'Median Tumor Volume'},
+                               {'var':'Tumor Volume Variance'},
+                              {'std':'Tumor Volume Std. Dev.'},
+                             {'sem':'Tumor Volume Std. Err.'})
